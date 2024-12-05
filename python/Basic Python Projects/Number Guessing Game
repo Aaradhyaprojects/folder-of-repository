@@ -1,0 +1,43 @@
+from tkinter import *
+import random 
+from tkinter import messagebox
+
+root = Tk()
+root.config(background = "white")
+root.geometry("2000x1000")
+root.title("Number guessing game")
+num = random.randint(0, 1001)
+def guess():
+    global num
+    try:
+        if int(input.get()) > num :
+            messagebox.showinfo("Incorrect", "Too High! Incorrect! Guess the number again!")
+            input.delete(0, END)
+        elif int(input.get()) < num:
+            messagebox.showinfo("Incorrect", "Too Low! Incorrect! Guess the number again!")
+            input.delete(0, END)
+        elif int(input.get()) == num:
+            messagebox.showinfo("Correct", "Correct! Here's another number! Try to guess it!!!!!")
+            input.delete(0, END)
+            num = random.randint(0, 1001)
+    except:
+        if input.get() == "":
+            messagebox.showerror("error", "Enter a number!!!!!!!!!!!!!!!")
+            input.delete(0, END)
+        else:
+            messagebox.showerror("warning", "You were supposed to enter a number! Try again!")
+            input.delete(0, END)
+
+label = Label(root, text = "Welcome To Number Guessing Game!!!!", width = 40, height = 2, font = ("Algerian", 40, "bold"), background = "white", border = 20)
+label.pack()
+label = Label(root, text = "Guess the number between 0 - 1000!", width = 40, height = 2, font = ("Algerian", 40, "bold"), background = "white", border = 20)
+label.place(x = 0, y = 100)
+lbel = Label(root, text = "Enter a number here : ", width = 20, height = 2, font = ("Algerian", 30, "bold"), background = "white", border = 20)
+lbel.place(x = 50, y = 250)
+input = Entry(root, width = 40, font = ("Algerian", 20, "bold"), border = 20)
+input.place(x = 570, y = 270)
+btnsub = Button(root, text = "Submit", width = 5, height = 1, font = ("Algerian", 20, "bold"), border = 20, command = guess)
+btnsub.place(x = 700, y = 350)
+btnq = Button(root, text = "Quit", width = 5, height = 1, font = ("Algerian", 20, "bold"), border = 20, command = root.destroy)
+btnq.place(x = 700, y = 450)
+root.mainloop()
