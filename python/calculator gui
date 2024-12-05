@@ -1,0 +1,94 @@
+from tkinter import *
+from tkinter import messagebox
+
+root = Tk()
+root.title("Calculator")
+root.geometry("370x360")
+root.resizable(width = False, height = False)
+font = ("Helena", 20, "bold")
+def press(event):
+    global scvalue
+    text = event.widget.cget("text")
+    if text == "Clear":
+        scvalue.set("")
+    elif text == "Del":
+        ln = len(inp.get())-1
+        inp.delete(ln)
+    elif text == "=":
+        if scvalue.get().isdigit():
+            value = int(scvalue.get())
+        else:
+            value = eval(inp.get())
+            scvalue.set(value)
+            inp.update()
+    else:
+        scvalue.set(scvalue.get() + text)
+        inp.update()
+        
+
+scvalue = StringVar()
+scvalue.set("")
+
+inp = Entry(root, textvar = scvalue, width = 23, border = 10, font = font)
+inp.place(x = 0, y = 0)
+
+btn = Button(root, text = "1", width = 4, height = 1, font = font)
+btn.place(x = 0, y = 60)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "2", width = 4, height = 1, font = font)
+btn.place(x = 80, y = 60)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "3", width = 4, height = 1, font = font)
+btn.place(x = 160, y = 60)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "/", width = 7, height = 1, font = font)
+btn.place(x = 240, y = 60)
+btn.bind('<Button-1>', press)
+
+btn = Button(root, text = "4", width = 4, height = 1, font = font)
+btn.place(x = 0, y = 120)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "5", width = 4, height = 1, font = font)
+btn.place(x = 80, y = 120)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "6", width = 4, height = 1, font = font)
+btn.place(x = 160, y = 120)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "*", width = 7, height = 1, font = font)
+btn.place(x = 240, y = 120)
+btn.bind('<Button-1>', press)
+
+btn = Button(root, text = "7", width = 4, height = 1, font = font)
+btn.place(x = 0, y = 180)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "8", width = 4, height = 1, font = font)
+btn.place(x = 80, y = 180)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "9", width = 4, height = 1, font = font)
+btn.place(x = 160, y = 180)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "-", width = 7, height = 1, font = font)
+btn.place(x = 240, y = 180)
+btn.bind('<Button-1>', press)
+
+btn = Button(root, text = "0", width = 4, height = 1, font = font)
+btn.place(x = 0, y = 240)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = ".", width = 4, height = 1, font = font)
+btn.place(x = 80, y = 240)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "+", width = 4, height = 1, font = font)
+btn.place(x = 160, y = 240)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "=", width = 7, height = 1, font = font)
+btn.place(x = 240, y = 240)
+btn.bind('<Button-1>', press)
+
+btn = Button(root, text = "Del", width = 8, height = 1, font = font)
+btn.place(x = 0, y = 300)
+btn.bind('<Button-1>', press)
+btn = Button(root, text = "Clear", width = 12, height = 1, font = font)
+btn.place(x = 155, y = 300)
+btn.bind('<Button-1>', press)
+
+root.mainloop()
