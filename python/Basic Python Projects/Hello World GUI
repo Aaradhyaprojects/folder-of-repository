@@ -1,0 +1,9 @@
+from tkinter import *
+
+root = Tk()
+root.config(background = "white")
+root.geometry("2000x1000")
+root.title("Hello World GUI")
+label = Label(root, text = "Hello World!", width = 300, height = 200, font = ("Algerian", 150, "bold"), background = "white", border = 20)
+label.pack()
+root.mainloop()
