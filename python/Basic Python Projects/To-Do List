@@ -1,0 +1,48 @@
+from tkinter import *
+root=Tk()
+root.geometry("1000x500")
+root.title("To-Do-List")
+def Add():
+    listo.insert(END, inp.get())
+    tet.set("")
+
+def Delete():
+    listo.delete(ANCHOR)
+
+def Done():
+    listo.itemconfig(
+        listo.curselection(),
+        fg="green"
+    )
+
+    listo.selection_clear(0, END)
+
+def notdone():
+    listo.itemconfig(
+        listo.curselection(),
+        fg="black"
+    )
+
+    listo.selection_clear(0, END)
+
+def dela():
+    listo.delete(0, END)
+
+tet = StringVar()
+tet.set("")
+font = ("matchbook", 20, "italic")
+inp = Entry(root, textvariable=tet, border=10, width = 89, font=font)
+inp.pack()
+AddBtn = Button(root, text="Add", border=10, width = 10, bg="red", fg="white", font=font, command = Add)
+AddBtn.place(x=100, y=55)
+Delbtn = Button(root, text="Delete", border=10, width = 10, bg="blue", fg="white", font=font, command = Delete)
+Delbtn.place(x=350, y=55)
+DoneBtn = Button(root, text="Done", border=10, width = 10, bg="green", fg="white", font=font, command = Done)
+DoneBtn.place(x=600, y=55)
+notdbtn = Button(root, text="Not Done", border=10, width = 10, bg="pink", fg="white", font=font, command = notdone)
+notdbtn.place(x=850, y=55)
+delaBtn = Button(root, text="Delete All", border=10, width = 10, bg="purple", fg="white", font=font, command = dela)
+delaBtn.place(x=1100, y=55)
+listo = Listbox(root, width=220, height=130, font = ("Algerian", 50, "bold"))
+listo.place(x = 0, y= 130)
+root.mainloop()
