@@ -1,7 +1,15 @@
 from tkinter import *
+from tkinter.font import Font
+from tkinter import filedialog
+import pickle
 root=Tk()
 root.geometry("1000x500")
 root.title("To-Do-List")
+
+def key(event):
+    listo.insert(END, inp.get())
+    tet.set("")
+
 def Add():
     listo.insert(END, inp.get())
     tet.set("")
@@ -10,29 +18,34 @@ def Delete():
     listo.delete(ANCHOR)
 
 def Done():
-    listo.itemconfig(
-        listo.curselection(),
-        fg="green"
-    )
-
-    listo.selection_clear(0, END)
+    try:
+        listo.itemconfig(
+            listo.curselection(),
+            fg="green"
+        )
+        listo.selection_clear(0, END)
+    except:
+        pass
 
 def notdone():
-    listo.itemconfig(
-        listo.curselection(),
-        fg="black"
-    )
-
-    listo.selection_clear(0, END)
+    try:
+        listo.itemconfig(
+            listo.curselection(),
+            fg="black"
+        )
+        listo.selection_clear(0, END)
+    except:
+        pass
 
 def dela():
     listo.delete(0, END)
 
 tet = StringVar()
 tet.set("")
-font = ("matchbook", 20, "italic")
-inp = Entry(root, textvariable=tet, border=10, width = 89, font=font)
+font = ("Impact", 20, "italic")
+inp = Entry(root, textvariable=tet, border=10, width = 1500, font=font)
 inp.pack()
+inp.bind('<Return>', key)
 AddBtn = Button(root, text="Add", border=10, width = 10, bg="red", fg="white", font=font, command = Add)
 AddBtn.place(x=100, y=55)
 Delbtn = Button(root, text="Delete", border=10, width = 10, bg="blue", fg="white", font=font, command = Delete)
@@ -43,6 +56,50 @@ notdbtn = Button(root, text="Not Done", border=10, width = 10, bg="pink", fg="wh
 notdbtn.place(x=850, y=55)
 delaBtn = Button(root, text="Delete All", border=10, width = 10, bg="purple", fg="white", font=font, command = dela)
 delaBtn.place(x=1100, y=55)
-listo = Listbox(root, width=220, height=130, font = ("Algerian", 50, "bold"))
-listo.place(x = 0, y= 130)
+my_scroll=Scrollbar(root, orient=VERTICAL)
+my_scroll.pack(side=RIGHT, fill=BOTH)
+listo = Listbox(root, width=1330, height=10, font = ("Impact", 50, "bold"), yscrollcommand=my_scroll.set, bg="#e2fd99", selectbackground="#e2fd99", selectforeground="black", highlightthickness=0, activestyle="dotbox")
+listo.pack(pady=80, side=LEFT)
+my_scroll.config(command=listo.yview)
+def save_list():
+    file_name=filedialog.asksaveasfilename(initialdir="C:/Downloads/data", title="Save File", filetypes=(("Dat Files", "*.dat"), ("All Files", "*.*")))
+
+    if file_name:
+        if file_name.endswith(".dat"):
+            pass
+        else:
+            file_name = f'{file_name}.dat'
+        count = 0
+        while count < listo.size():
+            if listo.itemcget(count, "fg") == "#dedede":
+                listo.delete(listo.index(count))
+            else:
+                count += 1
+
+            stuff = listo.get(0, END)
+
+            output_file = open(file_name, 'wb')
+
+            pickle.dump(stuff, output_file)
+def open_list():
+    file_name = filedialog.askopenfilename(initialdir="C:/Downloads/data", title="Open File", filetypes=(("Dat Files", "*.dat"), ("All Files", "*.*")))
+
+    if file_name:
+        listo.delete(0, END)
+
+        input_file = open(file_name, 'rb')
+
+        stuff = pickle.load(input_file)
+
+        for item in stuff:
+            listo.insert(END, item)
+
+my_Menu=Menu(root)
+root.config(menu=my_Menu)
+
+file_Menu=Menu(my_Menu, tearoff=False)
+my_Menu.add_cascade(label="File", menu=file_Menu)
+file_Menu.add_command(label="Save List", command=save_list)
+file_Menu.add_command(label="Open List", command=open_list)
+
 root.mainloop()
