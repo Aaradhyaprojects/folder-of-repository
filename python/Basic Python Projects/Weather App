@@ -1,0 +1,42 @@
+import tkinter as tk
+import requests
+root = tk.Tk()
+root.geometry('500x500')
+root.title('Weather App')
+def weather_data(root):
+    city = textfield.get()
+    api = 'https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=253d01e47c251a588a2367db24ba9f31'
+    json_data = requests.get(api).json()
+    condition = json_data['wheather'][0]['main']
+    temp = json_data['main']['temp']
+    min_temp = json_data['main']['min_temp']
+    max_temp = json_data['main']['max_temp']
+    pressure = json_data['main']['pressure']
+    humadity = json_data['main']['humadity']
+    wind = json_data['wind']['speed']
+
+    finalinfo = condition + "\n" + str(temp) + "F"
+    min_temp_data = "Min temp" + str(min_temp) + "F"
+    max_temp_data = "Max temp" + str(max_temp) + "F"
+    pressure_data = "Pressure" + str(pressure)
+    humadity_data = "Humidity" + str(humadity)
+    wind_data = "Wind" + str(wind)
+    final_info_label.config(text = finalinfo)
+    min_temp_label.config(text = min_temp_data)
+    max_temp_label.config(text = max_temp_data)
+    pressure_label.config(text = pressure_data)
+    humadity_label.config(text = humadity_data)
+    wind_label.config(text = wind_data)
+final_info_label = tk.Label(root)
+final_info_label.pack()
+min_temp_label = tk.Label(root)
+min_temp_label.pack()
+max_temp_label = tk.Label(root)
+max_temp_label.pack()
+pressure_label = tk.Label(root)
+pressure_label.pack()
+humadity_label = tk.Label(root)
+humadity_label.pack()
+wind_label = tk.Label(root)
+wind_label.pack()
+root.mainloop()
